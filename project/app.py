@@ -116,3 +116,4 @@ PAGE_OPTIONS = list(PAGES.keys())
 page_selection = st.sidebar.radio("Pages", PAGE_OPTIONS)
 page = PAGES[page_selection]
 page()
+

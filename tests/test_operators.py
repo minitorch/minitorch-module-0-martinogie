@@ -108,7 +108,17 @@ def test_sigmoid(a: float) -> None:
     * It is  strictly increasing.
     """
     # TODO: Implement for Task 0.2.
-    raise NotImplementedError("Need to implement for Task 0.2")
+    sigmoid_a = sigmoid(a)
+    # Property: It is always between 0.0 and 1.0
+    assert 0.0 <= sigmoid_a <= 1.0
+    # Property: One minus sigmoid is the same as sigmoid of the negative
+    assert_close(1.0 - sigmoid_a, sigmoid(-a))
+    # Property: It crosses 0 at 0.5
+    assert sigmoid(0.0) == 0.5
+    # Property: It is strictly increasing
+    if a < 1.0:
+        assert sigmoid(a) < sigmoid(a + 1.0)
+    # raise NotImplementedError("Need to implement for Task 0.2")
 
 
 @pytest.mark.task0_2
@@ -116,7 +126,9 @@ def test_sigmoid(a: float) -> None:
 def test_transitive(a: float, b: float, c: float) -> None:
     "Test the transitive property of less-than (a < b and b < c implies a < c)"
     # TODO: Implement for Task 0.2.
-    raise NotImplementedError("Need to implement for Task 0.2")
+    if lt(a, b) == 1.0 and lt(b, c) == 1.0:
+        assert lt(a, c) == 1.0
+    # raise NotImplementedError("Need to implement for Task 0.2")
 
 
 @pytest.mark.task0_2
@@ -126,7 +138,9 @@ def test_symmetric() -> None:
     gives the same value regardless of the order of its input.
     """
     # TODO: Implement for Task 0.2.
-    raise NotImplementedError("Need to implement for Task 0.2")
+    a, b = 0.5, 2.0
+    assert_close(mul(a, b), mul(b, a))
+    # raise NotImplementedError("Need to implement for Task 0.2")
 
 
 @pytest.mark.task0_2
@@ -136,7 +150,9 @@ def test_distribute() -> None:
     :math:`z \times (x + y) = z \times x + z \times y`
     """
     # TODO: Implement for Task 0.2.
-    raise NotImplementedError("Need to implement for Task 0.2")
+    x, y, z = 1.0, 2.0, 3.0
+    assert_close(mul(z, add(x, y)), add(mul(z, x), mul(z, y)))
+    # raise NotImplementedError("Need to implement for Task 0.2")
 
 
 @pytest.mark.task0_2
@@ -145,7 +161,12 @@ def test_other() -> None:
     Write a test that ensures some other property holds for your functions.
     """
     # TODO: Implement for Task 0.2.
-    raise NotImplementedError("Need to implement for Task 0.2")
+    a, b = 0.5, 2.0
+    # Property: The inverse of the inverse of a value should be the original value
+    assert_close(inv(inv(a)), a)
+    # Property: The negative of the negative of a value should be the original value
+    assert_close(neg(neg(b)), b)
+    # raise NotImplementedError("Need to implement for Task 0.2")
 
 
 # ## Task 0.3  - Higher-order functions
@@ -174,7 +195,15 @@ def test_sum_distribute(ls1: List[float], ls2: List[float]) -> None:
     is the same as the sum of each element of `ls1` plus each element of `ls2`.
     """
     # TODO: Implement for Task 0.3.
-    raise NotImplementedError("Need to implement for Task 0.3")
+    sum_ls1 = sum(ls1)
+    sum_ls2 = sum(ls2)
+    sum_total = sum_ls1 + sum_ls2
+
+    distributed_sum = [x + y for x, y in zip(ls1, ls2)]
+    distributed_sum_total = sum(distributed_sum)
+
+    assert_close(sum_total, distributed_sum_total)
+    # raise NotImplementedError("Need to implement for Task 0.3")
 
 
 @pytest.mark.task0_3

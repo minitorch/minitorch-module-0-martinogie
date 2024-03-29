@@ -1,13 +1,10 @@
 import pytest
 from hypothesis import given
-
+# from typing import Sequence, Tuple, Any
 import minitorch
-
 from .strategies import med_ints, small_floats
 
 # # Tests for module.py
-
-
 # ## Website example
 
 # This example builds a module
