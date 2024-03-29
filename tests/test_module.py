@@ -13,6 +13,42 @@ from .strategies import med_ints, small_floats
 # This example builds a module
 # as shown at https://minitorch.github.io/modules.html
 # and checks that its properties work.
+class Module(minitorch.Module):
+    def __init__(self) -> None:
+        super().__init__()
+        self._modules = {}
+        self._parameters = {}
+        self.training = True
+
+    def train(self) -> None:
+        "Set the mode of this module and all descendant modules to `train`."
+        self.training = True
+        for module in self.modules():
+            module.train()
+
+    def eval(self) -> None:
+        "Set the mode of this module and all descendant modules to `eval`."
+        self.training = False
+        for module in self.modules():
+            module.eval()
+
+    def named_parameters(self) -> Sequence[Tuple[str, minitorch.Parameter]]:
+        parameters = []
+        for name, param in self._parameters.items():
+            parameters.append((name, param))
+        for name, module in self._modules.items():
+            for m_name, m_param in module.named_parameters():
+                parameters.append((name + "." + m_name, m_param))
+        return parameters
+
+    def parameters(self) -> Sequence[minitorch.Parameter]:
+        return [param for _, param in self.named_parameters()]
+
+    def add_parameter(self, k: str, v: Any) -> minitorch.Parameter:
+        if isinstance(v, minitorch.Parameter):
+            self.__dict__["_parameters"][k] = v
+            return v
+        raise TypeError("The value should be a Parameter instance.")
 
 
 class ModuleA1(minitorch.Module):
@@ -182,3 +218,4 @@ def test_parameter() -> None:
     t2 = MockParam()
     q.update(t2)
     assert t2.x
+import minitorch
