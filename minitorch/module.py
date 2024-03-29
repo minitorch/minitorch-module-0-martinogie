@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Any, Dict, Optional, Sequence, Tuple
+from typing import Any, Dict, List, Optional, Sequence, Tuple
 
 
 class Module:
@@ -45,7 +45,7 @@ class Module:
             module.eval()
         # raise NotImplementedError("Need to implement for Task 0.4")
 
-    def named_parameters(self) -> Sequence[Tuple[str, Parameter]]:
+    def named_parameters(self) -> List[Tuple[str, Parameter]]:
         """
         Collect all the parameters of this module and its descendents.
 
